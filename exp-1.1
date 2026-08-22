@@ -1,0 +1,49 @@
+clc;
+clear;
+close all;
+
+%% Parameters
+fs = 1000;                  % Sampling frequency (Hz)
+t = 0:1/fs:1;               % Time vector
+
+TBW = 600;                  % Total Bandwidth (kHz)
+Users = 3;                  % Number of users
+CBW = TBW / Users;          % Channel Bandwidth per user
+
+fc = [100 300 500];         % Carrier frequencies (Hz)
+
+%% Message Signal
+m = sin(2*pi*10*t);         % Message signal, 10 Hz
+
+%% FDMA Modulated Signals
+s1 = m .* cos(2*pi*fc(1)*t);
+s2 = m .* cos(2*pi*fc(2)*t);
+s3 = m .* cos(2*pi*fc(3)*t);
+
+%% Plot FDMA Channel Signals
+figure;
+
+subplot(2,1,1);
+plot(t, s1, 'r', 'LineWidth', 1);
+hold on;
+plot(t, s2, 'g', 'LineWidth', 1);
+plot(t, s3, 'b', 'LineWidth', 1);
+hold off;
+
+grid on;
+title('FDMA Channel Allocation');
+xlabel('Time (s)');
+ylabel('Amplitude');
+legend('User 1 - 100 Hz', 'User 2 - 300 Hz', 'User 3 - 500 Hz');
+
+%% Channel Bandwidth per User
+subplot(2,1,2);
+bar(1:Users, CBW * ones(1,Users));
+
+grid on;
+xlabel('Users');
+ylabel('Channel Bandwidth (kHz)');
+title('Channel Bandwidth per User');
+
+xticks(1:Users);
+xticklabels({'User 1','User 2','User 3'});
