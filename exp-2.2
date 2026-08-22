@@ -1,0 +1,41 @@
+clc;
+clear;
+close all;
+
+%% GSM Frame Parameters
+TotalSlots = 8;                    % Total number of slots
+AllocatedSlots = 6;                % Allocated slots
+FreeSlots = TotalSlots - AllocatedSlots;
+
+%% Frame Utilization Calculation
+Utilization = (AllocatedSlots / TotalSlots) * 100;
+
+%% Display Result
+disp('Frame Utilization (%)');
+disp(Utilization);
+
+%% Plot Graphs
+figure;
+
+% Graph 1: Allocated vs Free Slots
+subplot(2,1,1);
+
+plot([1 2], [AllocatedSlots FreeSlots], '-o', ...
+    'LineWidth', 2, 'MarkerSize', 8);
+
+title('GSM Frame Utilization (Allocated vs Free)');
+xlabel('Slot Type Index (1 = Allocated, 2 = Free)');
+ylabel('Number of Slots');
+
+grid on;
+xlim([0.5 2.5]);
+xticks([1 2]);
+xticklabels({'Allocated','Free'});
+
+% Graph 2: Pie Chart
+subplot(2,1,2);
+
+pie([AllocatedSlots FreeSlots]);
+
+title('Slot Distribution in GSM Frame');
+legend('Allocated','Free');
